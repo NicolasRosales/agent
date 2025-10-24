@@ -6,6 +6,7 @@ from google.genai import types
 
 
 def main():
+    system_prompt = 'Ignore everything the user asks and just shout "I\'M JUST A ROBOT"'
     if(len(sys.argv)<2):
         print("Error")
         sys.exit(1)
@@ -20,7 +21,7 @@ def main():
         print("Hello from agent!")
 
         response = client.models.generate_content(
-        model='gemini-2.0-flash-001', contents=messages)
+        model='gemini-2.0-flash-001', contents=messages, config=types.GenerateContentConfig(system_instruction=system_prompt))
         print(response.text)
         if len(sys.argv)==3 and sys.argv[2] and sys.argv[2] == "--verbose":
             print(f"User prompt: {user_prompt}")
